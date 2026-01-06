@@ -1,0 +1,192 @@
+---
+alwaysApply: true
+---
+
+## 1) 前端/站台技術棧
+Next.js（Vercel）：個人首頁、作品集、部落格、互動小工具（你的密室/卡牌/心理測驗都很適合）
+TypeScript：把內容結構鎖住（文章、作品、專案、案例）
+Tailwind CSS：快速做乾淨、專業、暗色系也能很有質感
+MDX 或 Contentlayer：部落格/案例研究用 Markdown 寫，維護成本最低
+
+## 2) 網站內容結構
+網站要包含：品牌專頁 + 互動遊戲入口 + 作品集 + 長文
+
+目前已有1個遊戲及2組算命內容：
+- 密室逃脫遊戲-粉紅瑜珈墊：pink-yoga-mat-escape-game.vercel.app
+- 算命工具-江湖牌陣問心之旅：wk-tarot.vercel.app
+- 算命工具-天地人變數卡牌：triad-of-flux.vercel.app
+
+## 3) 視覺風格與色系
+
+### 風格定位
+- 暗色系 + 質感：深色背景為主，搭配柔和對比
+- 神秘感：呼應算命/密室主題，使用微光、漸變、柔和陰影
+- 現代極簡：保持乾淨，避免過度裝飾
+- 品牌一致性：統一視覺語言，讓遊戲與算命工具風格一致
+
+### 色系規範
+主色調（暗色系）：
+- 背景：深灰黑 #0a0a0a / #111111
+- 卡片/區塊：深灰 #1a1a1a / #1f1f1f
+- 邊框：深灰 #2a2a2a
+
+強調色（可選其一或組合）：
+- 神秘紫：紫色系 #8b5cf6 / #a78bfa（適合算命主題）
+- 粉紅：粉紅系 #ec4899 / #f472b6（呼應粉紅瑜珈墊）
+- 金色：金色系 #fbbf24 / #fcd34d（質感、神秘感）
+- 青藍：青藍系 #06b6d4 / #22d3ee（科技感）
+
+文字：
+- 主文字：淺灰 #e5e5e5 / #f5f5f5
+- 次要文字：中灰 #a3a3a3
+- 強調文字：白色 #ffffff
+
+## 4) 內容呈現架構
+
+### 首頁結構
+1. Hero Section（品牌介紹）
+   - 簡短個人介紹
+   - 核心價值/定位
+   - CTA：探索作品
+
+2. 互動體驗區（Featured）
+   - 3個遊戲/工具卡片式展示
+   - 懸停效果、預覽圖
+   - 直接入口
+
+3. 作品集（Portfolio）
+   - 精選作品網格展示
+   - 分類標籤（遊戲/工具/其他）
+
+4. 最新長文（Blog Preview）
+   - 顯示最新3-5篇文章
+   - 摘要 + 閱讀更多
+
+5. Footer
+   - 社交連結
+   - 聯絡方式
+
+### 頁面路由架構
+```
+/                    → 首頁（品牌 + 精選）
+/works               → 作品集（所有作品）
+  /works/[slug]      → 作品詳情頁
+/games               → 互動遊戲入口
+  /games/pink-yoga-mat
+  /games/wk-tarot
+  /games/triad-of-flux
+/blog                → 部落格列表
+  /blog/[slug]        → 文章詳情（MDX）
+/about               → 關於我
+/contact             → 聯絡（可選）
+```
+
+## 5) 技術架構建議
+
+### Next.js 目錄結構
+```
+app/
+  ├── (home)/              # 首頁路由組
+  │   ├── page.tsx
+  │   └── layout.tsx
+  ├── works/
+  │   ├── page.tsx         # 作品集列表
+  │   └── [slug]/
+  │       └── page.tsx     # 作品詳情
+  ├── games/
+  │   ├── page.tsx         # 遊戲入口頁
+  │   └── [slug]/
+  │       └── page.tsx     # 個別遊戲（可內嵌或跳轉）
+  ├── blog/
+  │   ├── page.tsx         # 部落格列表
+  │   └── [slug]/
+  │       └── page.tsx     # MDX 文章
+  └── layout.tsx           # 根布局（導航、Footer）
+
+components/
+  ├── ui/                  # 基礎 UI 組件
+  ├── sections/            # 頁面區塊組件
+  │   ├── Hero.tsx
+  │   ├── FeaturedGames.tsx
+  │   ├── Portfolio.tsx
+  │   └── BlogPreview.tsx
+  └── layout/              # 布局組件
+      ├── Navbar.tsx
+      └── Footer.tsx
+
+content/
+  ├── works/               # 作品內容（JSON/MDX）
+  ├── blog/                # 部落格文章（MDX）
+  └── games/               # 遊戲資訊（JSON）
+
+lib/
+  ├── contentlayer.ts      # Contentlayer 設定
+  └── utils.ts
+```
+
+### Contentlayer 內容結構
+- Blog 文章：標題、日期、摘要、標籤、內容
+- Works 作品：標題、描述、圖片、連結、分類、技術棧
+- Games 遊戲：標題、描述、預覽圖、外部連結、分類
+
+## 6) 經營策略
+
+### 內容經營
+- 定期更新長文：每週或每兩週一篇
+  - 遊戲設計心得
+  - 算命工具設計理念
+  - 技術分享（Next.js、Tailwind 技巧）
+  - 創作過程記錄
+- SEO 優化：每篇文章加入 meta、結構化資料、sitemap
+- 社群連結：在 Footer 與文章中加入社群連結
+
+### 作品展示策略
+每個作品包含：
+- 專案背景
+- 設計思考
+- 技術亮點
+- 成果展示（截圖/GIF/影片）
+- 連結（Demo、GitHub）
+- 分類標籤：遊戲、工具、其他
+
+### 互動體驗優化
+- 遊戲入口頁：統一風格卡片，懸停預覽、簡短介紹
+- 內嵌或跳轉：依遊戲複雜度決定
+- 追蹤分析：使用 Vercel Analytics 或 Google Analytics
+
+## 7) 部署策略
+
+### 前期（Vercel）
+- 直接部署：連接 GitHub，自動部署
+- 自訂網域：在 Vercel 設定中綁定
+- 環境變數：管理 API keys、環境設定
+- 預覽環境：每個 PR 自動產生預覽連結
+
+Vercel 負責：
+- 部署與上線：你 git push，它自動 build、上線
+- Next.js 的強項：SSR/ISR、Edge Function、Serverless API、預覽環境（Preview Deployments）
+- 網域綁定與憑證流程：在專案設定加 domain，照它的 DNS 指示做即可
+
+### 後期（導入 Cloudflare）
+穩定上軌道後再轉換到 Cloudflare
+
+Cloudflare 負責：
+- DNS（網域解析）：你的 yourname.com 要指到哪裡，Cloudflare 是總開關
+- 安全與風控（可選）：WAF、Bot 管理、流量規則、IP 限制、國家封鎖等
+- 靜態資源/大檔外掛（可選）：你不想把大量圖片、PDF、影片塞在 Vercel 或 Git 裡，就交給 R2
+
+遷移步驟：
+1. DNS 遷移：將 DNS 從 Vercel 轉到 Cloudflare，設定 CNAME 指向 Vercel
+2. 安全強化：啟用 WAF（可選）、Bot 管理（防爬蟲）
+3. 靜態資源優化：大圖片/影片移至 Cloudflare R2，使用 Cloudflare Images 自動優化
+4. 效能優化：Cloudflare CDN 快取，設定快取規則
+
+## 8) 實作優先順序
+1. 建立專案結構：初始化 Next.js + TypeScript + Tailwind
+2. 設計系統：定義顏色、字體、間距
+3. 建立首頁：Hero + Featured Games + Blog Preview
+4. 內容管理：設定 Contentlayer，建立範例內容
+5. 作品集頁：建立作品列表與詳情頁模板
+6. 部落格系統：MDX 文章系統
+7. 響應式設計：確保手機、平板、桌面體驗
+8. 效能優化：圖片優化、代碼分割、SEO
